@@ -18,6 +18,7 @@ public class Calculos {
     List<Double> num;
     int tamaño;
     int[] x;
+    final float z=1.96f;
      
     public Calculos(){
         num = new ArrayList<Double>();
@@ -76,4 +77,38 @@ public class Calculos {
         //return aux;//*****************
         return cad;  
     }
+    public double mediaArit(String cad){
+        double media=0;
+        String arr[]=cad.split("\n");
+        double numbers[]=new double[arr.length];
+        for(int i=0;i<numbers.length;i++){
+            numbers[i]=Double.parseDouble(arr[i]);
+            media+=numbers[i];
+        }
+        return (media/numbers.length);
+    }
+    public double varianza(String cad){
+        double suma=0,media=mediaArit(cad);
+        String arr[]=cad.split("\n");
+        double numbers[]=new double[arr.length];
+        for(int i=0;i<numbers.length;i++){
+            numbers[i]=Double.parseDouble(arr[i]);
+            suma+=Math.pow(numbers[i]-media, 2);
+        }
+        return suma/numbers.length;
+    }
+    private double li(int n){
+        return 0.5 -z*(1/(Math.sqrt(12*n)));
+    }
+    private double ls(int n){
+        return 0.5 +z*(1/(Math.sqrt(12*n)));
+    }
+    public String uniformidad(int n,double media){
+        if(media<ls(n)&&media>li(n)){
+            return "Aceptada";
+        }else{
+            return "Rechazada";
+        }
+    }
+    
 }
